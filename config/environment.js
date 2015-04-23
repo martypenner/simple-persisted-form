@@ -13,7 +13,7 @@ module.exports = function (environment) {
             'script-src': "'self'",
             'font-src': "'self'",
             'connect-src': "'self' race-roster-test-1.firebaseio.com wss://*.firebaseio.com",
-            'img-src': "'self' placehold.it",
+            'img-src': "'self' data: placehold.it",
             'style-src': "'self' 'unsafe-inline'",
             'media-src': "'self'"
         },
