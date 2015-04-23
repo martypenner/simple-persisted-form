@@ -1,9 +1,5 @@
 import Ember from 'ember';
 
-const requiredFields = ['name', 'email'].map((field) => {
-    return `model.${field}`;
-});
-
 export default Ember.Controller.extend({
     /**
      * @var {array} List of countries to choose from
@@ -16,21 +12,10 @@ export default Ember.Controller.extend({
     isSaving: false,
 
     /**
-     * @var {boolean} Whether the submit button should be disabled. Based on whether the model is
-     *                being persisted and all required fields are filled.
+     * @var {boolean} Whether the submit button should be disabled based on the model being valid and persisted.
      */
-    isSubmitDisabled: Ember.computed(...requiredFields, 'isSaving', function () {
-        if (this.get('isSaving')) {
-            return true;
-        }
-
-        for (let field of requiredFields) {
-            if (Ember.isBlank(this.get(field))) {
-                return true;
-            }
-        }
-
-        return false;
+    isSubmitDisabled: Ember.computed('model.isValid', 'isSaving', function () {
+        return this.get('isSaving') || !this.get('model.isValid');
     }),
 
     actions: {
