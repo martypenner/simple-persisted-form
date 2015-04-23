@@ -5,70 +5,79 @@
 
 <p>Bacon? Yes, bacon. Sweet, sweet bacon. Ground round pastrami pork loin tenderloin jerky.</p>
 
-<form>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Input Label
-                <input type="text" placeholder="large-12.columns"/>
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-4 columns">
-            <label>Input Label
-                <input type="text" placeholder="large-4.columns"/>
-            </label>
-        </div>
-        <div class="large-4 columns">
-            <label>Input Label
-                <input type="text" placeholder="large-4.columns"/>
-            </label>
-        </div>
-        <div class="large-4 columns">
-            <div class="row collapse">
-                <label>Input Label</label>
+<form {{action "updateUser" on="submit"}}>
+    <fieldset>
+        <legend>Your Contact Info</legend>
 
-                <div class="small-9 columns">
-                    <input type="text" placeholder="small-9.columns"/>
-                </div>
-                <div class="small-3 columns">
-                    <span class="postfix">.com</span>
-                </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Your Name
+                    {{input type="text" name="name" placeholder="John Smith" value=model.name}}
+                </label>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Select Box
-                <select>
-                    <option value="husker">Husker</option>
-                    <option value="starbuck">Starbuck</option>
-                    <option value="hotdog">Hot Dog</option>
-                    <option value="apollo">Apollo</option>
-                </select>
-            </label>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Email
+                    {{input type="email" name="email" placeholder="john@example.com" value=model.email}}
+                </label>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="large-6 columns">
-            <label>Choose Your Favorite</label>
-            <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Red</label>
-            <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Blue</label>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Phone
+                    {{input type="tel" placeholder="+1 555-555-1212" value=model.phone}}
+                </label>
+            </div>
         </div>
-        <div class="large-6 columns">
-            <label>Check these out</label>
-            <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-            <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Textarea Label
-                <textarea placeholder="small-12.columns"></textarea>
-            </label>
-        </div>
-    </div>
-</form>
+    </fieldset>
 
-<p>I agree to to the terms of bacon. Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage
-   meatball.</p>
+    <fieldset>
+        <legend>Where You Live</legend>
+
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Address
+                    {{input type="text" name="address" placeholder="123 Awesome Street" value=model.address}}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>
+                    City
+                    {{input type="text" name="city" placeholder="London" value=model.city}}
+                </label>
+            </div>
+            <div class="large-6 columns">
+                <label>
+                    Province/State
+                    {{input type="text" name="provinceOrState" placeholder="ON" value=model.provinceState}}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Country
+                    {{view "select" content=countries value=model.country}}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">
+                <label>
+                    {{input type="text" name="postalCode" placeholder="A1A 2B2" value=model.postalCode}}
+                </label>
+            </div>
+        </div>
+    </fieldset>
+
+    <p>Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball.</p>
+
+    <button type="submit" disabled={{isSubmitDisabled}}>Save My Info</button>
+</form>
