@@ -7,22 +7,28 @@
 
 <form {{action "updateUser" on="submit"}}>
     <fieldset>
-        <legend>Your Contact Info</legend>
+        <legend>Your Contact Info (* Required)</legend>
 
         <div class="row">
             <div class="large-12 columns">
-                <label>
-                    Your Name
+                <label class={{if model.errors.name "error"}}>
+                    Your Name *
                     {{input type="text" name="name" placeholder="John Smith" value=model.name}}
                 </label>
+                {{#liquid-if model.errors.name}}
+                    <small class="error">{{model.errors.name}}</small>
+                {{/liquid-if}}
             </div>
         </div>
         <div class="row">
             <div class="large-12 columns">
-                <label>
-                    Email
+                <label class={{if model.errors.email "error"}}>
+                    Email *
                     {{input type="email" name="email" placeholder="john@example.com" value=model.email}}
                 </label>
+                {{#liquid-if model.errors.email}}
+                    <small class="error">{{model.errors.email}}</small>
+                {{/liquid-if}}
             </div>
         </div>
         <div class="row">
@@ -69,10 +75,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="large-3 columns">
-                <label>
+            <div class="large-4 columns">
+                <label class="error">
                     {{input type="text" name="postalCode" placeholder="A1A 2B2" value=model.postalCode}}
                 </label>
+                {{#liquid-if model.errors.postalCode}}
+                    <small class="error">{{model.errors.postalCode}}</small>
+                {{/liquid-if}}
             </div>
         </div>
     </fieldset>
