@@ -7,6 +7,11 @@ export default Ember.Controller.extend({
     countries: [],
 
     /**
+     * @var {boolean} Whether to show the postal code field (only if selected country is Canada)
+     */
+    shouldShowPostalCodeField: Ember.computed.equal('model.canValidatePostalCode', true),
+
+    /**
      * @var {boolean} Whether the model is being persisted right now
      */
     isSaving: false,
