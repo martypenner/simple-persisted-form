@@ -14,7 +14,7 @@ module.exports = function (environment) {
             'font-src': "'self'",
             'connect-src': "'self' race-roster-test-1.firebaseio.com wss://*.firebaseio.com",
             'img-src': "'self' placehold.it",
-            'style-src': "'self'",
+            'style-src': "'self' 'unsafe-inline'",
             'media-src': "'self'"
         },
 
