@@ -1,0 +1,13 @@
+{
+  "firebase": "race-roster-test-1",
+  "public": "dist",
+  "rewrite": [{
+    "source": "**",
+    "destination": "/index.html"
+  }],
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
