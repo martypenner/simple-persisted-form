@@ -1,6 +1,17 @@
 @import "settings";
 @import "foundation";
 
-button.disabled, button[disabled], .button.disabled, .button[disabled] {
+button.disabled,
+button[disabled],
+.button.disabled,
+.button[disabled],
+button.disabled:hover,
+button.disabled:focus,
+button[disabled]:hover,
+button[disabled]:focus,
+.button.disabled:hover,
+.button.disabled:focus,
+.button[disabled]:hover,
+.button[disabled]:focus {
     background-color: rgb(169, 169, 169);
 }
