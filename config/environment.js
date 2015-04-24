@@ -10,7 +10,7 @@ module.exports = function (environment) {
 
         contentSecurityPolicy: {
             'default-src': "'none'",
-            'script-src': "'self'",
+            'script-src': "'self' firebaseio.com",
             'font-src': "'self'",
             'connect-src': "'self' race-roster-test-1.firebaseio.com wss://*.firebaseio.com",
             'img-src': "'self' data: placehold.it",
