@@ -102,7 +102,7 @@ export default Ember.Controller.extend({
     /**
      * @var {string} The message to show in the submit button
      */
-    submitMessage: function () {
+    submitMessage: Ember.computed('isSaving', 'isSaveSuccessful', function () {
         let text = 'Save My Info';
         if (this.get('isSaving')) {
             text = 'Saving...';
@@ -111,13 +111,25 @@ export default Ember.Controller.extend({
         }
 
         return text;
-    }.property('isSaving', 'isSaveSuccessful'),
+    }),
 
     /**
      * @var {boolean} Whether the submit button should be disabled based on the model being valid and persisted.
      */
     isSubmitDisabled: Ember.computed('model.isValid', 'isSaving', function () {
         return this.get('isSaving') || !this.get('model.isValid');
+    }),
+
+    /**
+     * Update the stored id after persisting the user.
+     */
+    onUpdateSaveSuccessful: Ember.observer('isSaveSuccessful', function () {
+        Ember.run.once(() => {
+            let isSaveSuccessful = this.get('isSaveSuccessful');
+            if (isSaveSuccessful) {
+                this.set('existingId', this.get('model.id'));
+            }
+        });
     }),
 
     actions: {
