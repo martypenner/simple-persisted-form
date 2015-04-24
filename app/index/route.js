@@ -213,8 +213,10 @@ const countryList = [
 ];
 
 export default Ember.Route.extend({
-    model: function () {
-        return this.store.createRecord('user', {});
+    model() {
+        return new Ember.RSVP.Promise((resolve) => {
+            resolve(this.store.createRecord('user', {}));
+        });
     },
 
     setupController(controller, model) {
