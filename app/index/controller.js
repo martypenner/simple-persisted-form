@@ -1,6 +1,26 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+    queryParams: ['existingId'],
+
+    /**
+     * @var {string} Track any passed-in existing ID.
+     */
+    existingId: null,
+
+    /**
+     * Setup an existing user as the model in order to test real-time updates.
+     */
+    setupExistingUser: Ember.observer('existingId', function () {
+        if (Ember.isNone(this.get('existingId'))) {
+            return;
+        }
+
+        this.store.find('user', this.get('existingId')).then((model) => {
+            this.set('model', model);
+        });
+    }),
+
     /**
      * @var {array} List of countries to choose from
      */
@@ -82,7 +102,7 @@ export default Ember.Controller.extend({
          */
         closeAlert: function () {
             Ember.$('.alert-box').slideUp(function () {
-                $(this).remove();
+                Ember.$(this).remove();
             });
         }
     }
