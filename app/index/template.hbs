@@ -1,29 +1,107 @@
-<h3>Page Title
+<h3>
+    Page Title
     <small>Page subtitle</small>
 </h3>
 
-{{model.name}}
-{{model.country}}
+<p>Bacon? Yes, bacon. Sweet, sweet bacon. Ground round pastrami pork loin tenderloin jerky.</p>
 
-<p>Bacon ipsum dolor sit amet salami ham hock biltong ball tip drumstick sirloin pancetta meatball short loin.
-   Venison tail chuck pork chop, andouille ball tip beef ribs flank boudin bacon. Salami andouille pork belly
-   short ribs flank cow. Salami sirloin turkey kielbasa. Sausage venison pork loin leberkas chuck short loin,
-   cow ham prosciutto pastrami jowl. Ham hock jerky tri-tip, fatback hamburger shoulder swine pancetta ground
-   round. Tri-tip prosciutto meatball turkey, brisket spare ribs shankle chuck cow chicken ham hock boudin
-   meatloaf jowl.</p>
+<form {{action "updateUser" on="submit"}}>
+    <fieldset>
+        <legend>Your Contact Info (* Required)</legend>
 
-<p>Ground round pastrami pork loin tenderloin jerky. Jerky spare ribs biltong, ham hock ham capicola pork. Jerky
-   turducken pork, meatloaf sausage capicola swine corned beef turkey short loin. Tongue prosciutto pork loin,
-   ground round spare ribs venison kielbasa strip steak.</p>
+        <div class="row">
+            <div class="large-12 columns">
+                <label class={{if model.errors.name "error"}}>
+                    Your Name *
+                    {{input type="text" name="name" placeholder="John Smith" value=model.name}}
+                </label>
+                {{#liquid-if model.errors.name}}
+                    <small class="error">{{model.errors.name}}</small>
+                {{/liquid-if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label class={{if model.errors.email "error"}}>
+                    Email *
+                    {{input type="email" name="email" placeholder="john@example.com" value=model.email}}
+                </label>
+                {{#liquid-if model.errors.email}}
+                    <small class="error">{{model.errors.email}}</small>
+                {{/liquid-if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Phone
+                    {{input type="tel" placeholder="+1 555-555-1212" value=model.phone}}
+                </label>
+            </div>
+        </div>
+    </fieldset>
 
-<p>Hamburger bresaola turkey t-bone, leberkas salami pork chop ham hock beef ribs. Rump biltong meatball
-   venison, short ribs pork loin shank shankle corned beef beef. Cow salami jowl short loin hamburger fatback.
-   Short ribs pork belly shoulder pastrami drumstick salami corned beef ham hock bresaola. Swine filet mignon
-   cow sausage ball tip. Cow ribeye ground round, sausage pork loin pig beef ball tip turkey boudin.</p>
+    <fieldset>
+        <legend>Where You Live</legend>
 
-<p>Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball. Filet mignon meatloaf
-   ground round andouille ham hock pork. Bresaola short loin meatball chuck hamburger pig. Turkey venison chuck,
-   tongue fatback tail swine jerky corned beef shank kielbasa prosciutto ribeye ham tri-tip. Rump bacon pork
-   belly meatloaf shoulder short loin meatball kielbasa pork loin tongue bresaola brisket corned beef jowl
-   prosciutto. Beef ribs shankle short ribs pork belly corned beef fatback pork chop tongue biltong boudin strip
-   steak sirloin meatloaf pancetta.</p>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Address
+                    {{input type="text" name="address" placeholder="123 Awesome Street" value=model.address}}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>
+                    City
+                    {{input type="text" name="city" placeholder="London" value=model.city}}
+                </label>
+            </div>
+            <div class="large-6 columns">
+                <label>
+                    Province/State
+                    {{#if provincesOrStates}}
+                        {{view "select" content=provincesOrStates value=model.provinceState}}
+                    {{else}}
+                        {{input type="text" name="provinceOrState" placeholder="ON" value=model.provinceState}}
+                    {{/if}}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>
+                    Country
+                    {{view "select" content=countries value=model.country}}
+                </label>
+            </div>
+        </div>
+        {{#liquid-if shouldShowPostalCodeField}}
+            <div class="row">
+                <div class="large-4 columns">
+                    <label class="error">
+                        {{input type="text" name="postalCode" placeholder="A1A 2B2" value=model.postalCode}}
+                    </label>
+                    {{#liquid-if model.errors.postalCode}}
+                        <small class="error">{{model.errors.postalCode}}</small>
+                    {{/liquid-if}}
+                </div>
+            </div>
+        {{/liquid-if}}
+    </fieldset>
+
+    <p>Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball.</p>
+
+    {{#if saveError}}
+        <div data-alert class="alert-box alert">
+            {{saveError}}
+            <a class="close" {{action "closeAlert"}}>&times;</a>
+        </div>
+    {{/if}}
+
+    <button type="submit" class="{{if isSaveSuccessful "success"}}" disabled={{isSubmitDisabled}}>
+        {{submitMessage}}
+    </button>
+</form>
