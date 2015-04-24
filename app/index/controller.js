@@ -12,9 +12,34 @@ export default Ember.Controller.extend({
     shouldShowPostalCodeField: Ember.computed.equal('model.canValidatePostalCode', true),
 
     /**
-     * @var {boolean} Whether the model is being persisted right now
+     * @var {object} A run loop reference so we cancel at will. Used in timing the submit button states.
+     */
+    runLater: null,
+
+    /**
+     * @var {object} Submit button states
      */
     isSaving: false,
+    isSaveSuccessful: false,
+
+    /**
+     * @var {string} Any error messages that are received while saving
+     */
+    saveError: null,
+
+    /**
+     * @var {string} The message to show in the submit button
+     */
+    submitMessage: function () {
+        let text = 'Save My Info';
+        if (this.get('isSaving')) {
+            text = 'Saving...';
+        } else if (this.get('isSaveSuccessful')) {
+            text = 'Saved!';
+        }
+
+        return text;
+    }.property('isSaving', 'isSaveSuccessful'),
 
     /**
      * @var {boolean} Whether the submit button should be disabled based on the model being valid and persisted.
@@ -27,16 +52,38 @@ export default Ember.Controller.extend({
         /**
          * Persist the model, showing success or error messages based on the outcome.
          */
-        updateUser() {
-            this.set('isSaving', true);
-            this.get('model').save()
-                .then(function () {
-                    throw new Error('failed bwah');
-                }).catch(function (reason) {
-                    console.log(reason.message);
-                }).finally(() => {
-                    this.set('isSaving', false);
-                });
+        updateUser: function () {
+            this.setProperties({
+                isSaving: true,
+                saveError: null,
+                isSaveSuccessful: false
+            });
+
+            Ember.run.cancel(this.get('runLater'));
+
+            this.get('model').save().then(() => {
+                this.set('isSaveSuccessful', true);
+            }).catch((reason) => {
+                this.set('saveError', `Oh no! There was a problem saving your info: ${reason.message}`);
+            }).then(() => {
+                this.set('isSaving', false);
+                this.set('runLater', Ember.run.later(() => {
+                    try {
+                        this.set('isSaveSuccessful', false);
+                    } catch (e) {
+                    }
+                }, 2000));
+            });
+        },
+
+        /**
+         * Close any open alerts.
+         * TODO: this should be scoped in a component, but this works for now.
+         */
+        closeAlert: function () {
+            Ember.$('.alert-box').slideUp(function () {
+                $(this).remove();
+            });
         }
     }
 });
