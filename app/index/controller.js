@@ -1,12 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-    queryParams: ['existingId'],
+    queryParams: ['existingId', 'simulatedError'],
 
     /**
-     * @var {string} Track any passed-in existing ID.
+     * @var {string} Track any passed-in existing ID
      */
     existingId: null,
+
+    /**
+     * @var {boolean} A simulated error message to display
+     */
+    simulatedError: null,
 
     /**
      * Setup an existing user as the model in order to test real-time updates.
@@ -84,7 +89,12 @@ export default Ember.Controller.extend({
             Ember.run.cancel(this.get('runLater'));
 
             this.get('model').save().then(() => {
-                this.set('isSaveSuccessful', true);
+                let simulatedError = this.get('simulatedError');
+                if (!Ember.isNone(simulatedError)) {
+                    throw new Error(simulatedError);
+                } else {
+                    this.set('isSaveSuccessful', true);
+                }
             }).catch((reason) => {
                 this.set('saveError', `Oh no! There was a problem saving your info: ${reason.message}`);
             }).then(() => {

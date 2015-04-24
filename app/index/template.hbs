@@ -90,12 +90,12 @@
 
     <p>Prosciutto ball tip filet mignon andouille frankfurter chicken rump sausage meatball.</p>
 
-    {{#liquid-if saveError}}
+    {{#if saveError}}
         <div data-alert class="alert-box alert">
             {{saveError}}
             <a class="close" {{action "closeAlert"}}>&times;</a>
         </div>
-    {{/liquid-if}}
+    {{/if}}
 
     <button type="submit" class="{{if isSaveSuccessful "success"}}" disabled={{isSubmitDisabled}}>
         {{submitMessage}}
