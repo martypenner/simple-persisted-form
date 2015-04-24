@@ -18,6 +18,8 @@ export default Ember.Controller.extend({
 
         this.store.find('user', this.get('existingId')).then((model) => {
             this.set('model', model);
+        }).catch(function () {
+            // Do nothing; we don't need to catch this case since we're passing in an ID anyway
         });
     }),
 
