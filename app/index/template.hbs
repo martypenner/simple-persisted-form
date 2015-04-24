@@ -63,7 +63,7 @@
                 <label>
                     Province/State
                     {{#if provincesOrStates}}
-                        {{view "select" content=provincesOrStates value=model.provinceState}}
+                        {{view "select" name="provinceOrState" content=provincesOrStates value=model.provinceState}}
                     {{else}}
                         {{input type="text" name="provinceOrState" placeholder="ON" value=model.provinceState}}
                     {{/if}}
