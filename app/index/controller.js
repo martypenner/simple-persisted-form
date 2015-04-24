@@ -22,8 +22,14 @@ export default Ember.Controller.extend({
         }
 
         this.store.find('user', this.get('existingId')).then((model) => {
+            let provinceState = model.get('provinceState');
             this.set('model', model);
-        }).catch(function () {
+
+            // Defer until current actions are complete before restoring the now-overwritten provinceState
+            Ember.run.scheduleOnce('actions', () => {
+                this.set('model.provinceState', provinceState);
+            });
+        }).catch(function (e) {
             // Do nothing; we don't need to catch this case since we're passing in an ID anyway
         });
     }),
@@ -47,11 +53,12 @@ export default Ember.Controller.extend({
      * Computed property to handle outputting a list of provinces, states, or nothing.
      * Used in a select component.
      */
-    provincesOrStates: Ember.computed('model.country', 'model.provinceState', function () {
+    provincesOrStates: Ember.computed('model.country', function () {
         let provincesOrStates = null;
-        if (this.get('model.country') === 'Canada') {
+        let country = this.get('model.country');
+        if (country === 'Canada') {
             provincesOrStates = this.get('provinces');
-        } else if (this.get('model.country') === 'United States') {
+        } else if (country === 'United States') {
             provincesOrStates = this.get('states');
         }
 
