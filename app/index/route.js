@@ -214,7 +214,7 @@ const countryList = [
 
 export default Ember.Route.extend({
     model: function () {
-        return this.store.find('user', initialId);
+        return this.store.createRecord('user', {});
     },
 
     setupController(controller, model) {

@@ -38,7 +38,8 @@ export default DS.Model.extend(EmberValidations.Mixin, {
                 'with': /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i,
                 allowBlank: false,
                 message: 'Your email should look something like this: "name@example.com".'
-            }
+            },
+            presence: {message: 'You need to provide your email address.'}
         },
         postalCode: {
             format: {
