@@ -1,6 +1,5 @@
 import Ember from 'ember';
 
-const initialId = '-JnaP7QDF6nbU-g0QQ2_';
 // A hard-coded list of countries. I'm using double-quotes because some countries have single quotes in their names
 const countries = [
     "Canada",
