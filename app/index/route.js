@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const initialId = '-JnaP7QDF6nbU-g0QQ2_';
 // A hard-coded list of countries. I'm using double-quotes because some countries have single quotes in their names
-const countryList = [
+const countries = [
     "Canada",
     "United States",
     "Afghanistan",
@@ -211,6 +211,82 @@ const countryList = [
     "Zambia",
     "Zimbabwe"
 ];
+const provinces = [
+    "Alberta",
+    "British Columbia",
+    "Manitoba",
+    "New Brunswick",
+    "Newfoundland",
+    "Northwest Territories",
+    "Nova Scotia",
+    "Nunavut",
+    "Ontario",
+    "Prince Edward Island",
+    "Québec",
+    "Saskatchewan",
+    "Yukon Territory"
+];
+const states = [
+    "Alabama",
+    "Alaska",
+    "American Samoa",
+    "Arizona",
+    "Arkansas",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "Delaware",
+    "District Of Columbia",
+    "Federated States Of Micronesia",
+    "Florida",
+    "Georgia",
+    "Guam",
+    "Hawaii",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Maine",
+    "Marshall Islands",
+    "Maryland",
+    "Massachusetts",
+    "Michigan",
+    "Minnesota",
+    "Mississippi",
+    "Missouri",
+    "Montana",
+    "Nebraska",
+    "Nevada",
+    "New Hampshire",
+    "New Jersey",
+    "New Mexico",
+    "New York",
+    "North Carolina",
+    "North Dakota",
+    "Northern Mariana Islands",
+    "Ohio",
+    "Oklahoma",
+    "Oregon",
+    "Palau",
+    "Pennsylvania",
+    "Puerto Rico",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Vermont",
+    "Virgin Islands",
+    "Virginia",
+    "Washington",
+    "West Virginia",
+    "Wisconsin",
+    "Wyoming"
+];
 
 export default Ember.Route.extend({
     model() {
@@ -221,6 +297,8 @@ export default Ember.Route.extend({
 
     setupController(controller, model) {
         this._super(controller, model);
-        controller.set('countries', countryList);
+        controller.set('countries', countries);
+        controller.set('provinces', provinces);
+        controller.set('states', states);
     }
 });

@@ -34,6 +34,51 @@ export default Ember.Controller.extend({
     countries: [],
 
     /**
+     * @var {array} List of US states to choose from
+     */
+    states: [],
+
+    /**
+     * @var {array} List of provinces to choose from
+     */
+    provinces: [],
+
+    /**
+     * Computed property to handle outputting a list of provinces, states, or nothing.
+     * Used in a select component.
+     */
+    provincesOrStates: Ember.computed('model.country', 'model.provinceState', function () {
+        let provincesOrStates = null;
+        if (this.get('model.country') === 'Canada') {
+            provincesOrStates = this.get('provinces');
+        } else if (this.get('model.country') === 'United States') {
+            provincesOrStates = this.get('states');
+        }
+
+        return provincesOrStates;
+    }),
+
+    /**
+     * Ensure the province/state is set to something that exists within the province or state
+     * list if not dealing with a free-form input field.
+     */
+    resetUserProvinceOrStateOnCountryChange: Ember.observer('model.country', function () {
+        Ember.run.next(() => {
+            if (Ember.isNone(this.get('provincesOrStates.firstObject'))) {
+                return;
+            }
+
+            let existingItem = this.get('provincesOrStates').find((provinceOrState) => {
+                return this.get('model.provinceState') === provinceOrState;
+            });
+
+            if (Ember.isNone(existingItem)) {
+                this.set('model.provinceState', this.get('provincesOrStates.firstObject'));
+            }
+        });
+    }),
+
+    /**
      * @var {boolean} Whether to show the postal code field (only if selected country is Canada)
      */
     shouldShowPostalCodeField: Ember.computed.equal('model.canValidatePostalCode', true),

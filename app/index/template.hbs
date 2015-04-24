@@ -62,7 +62,11 @@
             <div class="large-6 columns">
                 <label>
                     Province/State
-                    {{input type="text" name="provinceOrState" placeholder="ON" value=model.provinceState}}
+                    {{#if provincesOrStates}}
+                        {{view "select" content=provincesOrStates value=model.provinceState}}
+                    {{else}}
+                        {{input type="text" name="provinceOrState" placeholder="ON" value=model.provinceState}}
+                    {{/if}}
                 </label>
             </div>
         </div>
