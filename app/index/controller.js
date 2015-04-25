@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
             Ember.run.scheduleOnce('actions', () => {
                 this.set('model.provinceState', provinceState);
             });
-        }).catch(function (e) {
+        }).catch(function () {
             // Do nothing; we don't need to catch this case since we're passing in an ID anyway
         });
     }),
